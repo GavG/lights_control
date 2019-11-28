@@ -4,6 +4,9 @@ import socketserver
 import os
 import websockets
 import asyncio
+import json
+import signal
+import sys
 
 from multiprocessing import Process
 
@@ -18,16 +21,14 @@ def setup_light_controller():
     global light_controller
 
     light_controller.add_lights({
-        'l1': 4,
-        'l2': 7,
-        'l3': 8,
+        'LED_1': 4,
+        'LED_2': 7,
+        'LED_3': 8,
     })
 
-    # light_controller.turn_on_lights([17])
+    light_controller.turn_on_lights([4])
     #
     # light_controller.turn_off_lights([17])
-
-    light_controller._release_lights()
 
 def setup_web_server():
     os.chdir('./public')
@@ -44,9 +45,9 @@ def setup_ws_server(light_controller):
 
     async def time(websocket, path):
         while True:
-            now = datetime.datetime.utcnow().isoformat() + "Z"
-            await websocket.send(now)
-            await asyncio.sleep(random.random() * 3)
+            packet = json.dumps(light_controller.list_lights())
+            await websocket.send(packet)
+            await asyncio.sleep(400)
 
     start_server = websockets.serve(time, "127.0.0.1", 5678)
 
@@ -54,8 +55,15 @@ def setup_ws_server(light_controller):
     asyncio.get_event_loop().run_forever()
 
 
+def signal_handler(sig, frame):
+    global light_controller
+    light_controller._release_lights()
+    sys.exit(0)
+
 def run():
     global light_controller
+
+    signal.signal(signal.SIGINT, signal_handler)
 
     setup_light_controller()
 

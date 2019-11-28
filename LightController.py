@@ -19,8 +19,8 @@ class LightController:
             self.lights[pin] = Light(self, name, pin)
             return True
 
-    def list_lights():
-        return lights.values()
+    def list_lights(self):
+        return [{light.name: light.state} for light in self.lights.values()]
 
     def turn_on_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
