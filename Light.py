@@ -11,7 +11,7 @@ class Light(Controllable):
     FLASH_COMMAND = '_flash'
 
     VALID_COMMANDS = [ON_COMMAND, OFF_COMMAND, FLASH_COMMAND]
-    VALID_PINS = [17]
+    VALID_PINS = [4, 7, 8, 9, 10, 11, 17, 18, 22, 23, 24, 25, 27]
 
     COMMAND_RESULTANT_STATES = {
         ON_COMMAND: ON_STATE,
@@ -26,8 +26,8 @@ class Light(Controllable):
     state = OFF_STATE
 
     def __init__(self, owner, name, pin):
-        if(not pin and isinstance(pin, int) and pin in self.VALID_PINS):
-            raise Exception('pin is required')
+        if(not (pin and isinstance(pin, int) and pin in self.VALID_PINS)):
+            raise Exception('pin is required and must be valid')
 
         Controllable.__init__(self, owner, name)
         self.pin = pin

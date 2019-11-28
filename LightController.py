@@ -4,16 +4,17 @@ class LightController:
 
     lights = {};
 
-    def __init__(self):
-        self.add_light('l1', 17)
-
     def _release_lights(self):
         for light in self.lights.values():
             light.release()
 
         self.lights = {} #releases refs automagically
 
-    def add_light(self, name, pin):
+    def add_lights(self, lights):
+        for name, pin in lights.items():
+            self._add_light(name, pin)
+
+    def _add_light(self, name, pin):
         if(not pin in self.lights):
             self.lights[pin] = Light(self, name, pin)
             return True
@@ -38,15 +39,3 @@ class LightController:
 
     def emit(self, name, state):
         print('light name: ' + name + ', state: ' + state)
-
-def run():
-
-    light_controller = LightController()
-
-    light_controller.turn_on_lights([17])
-
-    light_controller.turn_off_lights([17])
-
-    light_controller._release_lights()
-
-run()
