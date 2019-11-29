@@ -68,6 +68,8 @@ async def run():
         'LED_3': 8,
     })
 
+    await light_controller.enable_lights([4, 7, 8])
+
     loop = asyncio.new_event_loop()
     ws_server_thread = threading.Thread(target=setup_ws_server, name='ws', args=[loop])
     ws_server_thread.start()
@@ -75,14 +77,5 @@ async def run():
     web_server_thread = threading.Thread(target=setup_web_server, name='web')
     web_server_thread.start()
 
-    time.sleep(10)
-
-    await light_controller.turn_on_lights([4])
-
-    time.sleep(10)
-
-    await light_controller.turn_off_lights([4])
-
-    time.sleep(10)
 
 asyncio.run(run())

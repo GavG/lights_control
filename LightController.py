@@ -23,7 +23,17 @@ class LightController:
             return True
 
     def list_lights(self):
-        return [{light.name: light.state} for light in self.lights.values()]
+        return [{light.name: light.computed_state()} for light in self.lights.values()]
+
+    async def enable_lights(self, pins):
+        if(all(pin in self.lights for pin in pins)):
+            for pin in pins:
+                await self.lights[pin].command(Light.ENABLE_COMMAND)
+
+    async def disable_lights(self, pins):
+        if(all(pin in self.lights for pin in pins)):
+            for pin in pins:
+                await self.lights[pin].command(Light.DISABLE_COMMAND)
 
     async def turn_on_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
@@ -44,7 +54,7 @@ class LightController:
         self.websocket = websocket
 
     async def emit(self, name, state):
-        print('light name: ' + name + ', state: ' + state)
+        print('light name: ' + name + ', state: ' + state['state'])
 
         if(self.websocket):
             print('emit')
