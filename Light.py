@@ -36,7 +36,7 @@ class Light(Controllable):
         #free up GPIOs
         print("Release: " + self.name + ' pin: ' + str(self.pin))
 
-    def command(self, command, params = None):
+    async def command(self, command, params = None):
 
         if(not command in self.VALID_COMMANDS):
             return false
@@ -44,7 +44,7 @@ class Light(Controllable):
         if(getattr(self, command)(params)):
             self.state = self.COMMAND_RESULTANT_STATES[command]
 
-        self.emit()
+        await self.emit()
 
     def _turn_on(self, params = None):
         if(self.state != self.COMMAND_RESULTANT_STATES[self.ON_COMMAND]):

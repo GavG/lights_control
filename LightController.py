@@ -1,8 +1,11 @@
 from Light import Light
+from multiprocessing import Value
+import json
 
 class LightController:
 
     lights = {};
+    websocket = None
 
     def _release_lights(self):
         for light in self.lights.values():
@@ -22,20 +25,27 @@ class LightController:
     def list_lights(self):
         return [{light.name: light.state} for light in self.lights.values()]
 
-    def turn_on_lights(self, pins):
+    async def turn_on_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
             for pin in pins:
-                self.lights[pin].command(Light.ON_COMMAND)
+                await self.lights[pin].command(Light.ON_COMMAND)
 
-    def turn_off_lights(self, pins):
+    async def turn_off_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
             for pin in pins:
-                self.lights[pin].command(Light.OFF_COMMAND)
+                await self.lights[pin].command(Light.OFF_COMMAND)
 
-    def flash_lights(self, pins):
+    async def flash_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
             for pin in pins:
-                self.lights[pin].command(Light.FLASH_COMMAND)
+                await self.lights[pin].command(Light.FLASH_COMMAND)
 
-    def emit(self, name, state):
+    def set_ws(self, websocket):
+        self.websocket = websocket
+
+    async def emit(self, name, state):
         print('light name: ' + name + ', state: ' + state)
+
+        if(self.websocket):
+            print('emit')
+            await self.websocket.send(json.dumps({name: state}))

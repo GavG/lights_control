@@ -12,5 +12,5 @@ class Controllable:
         self.name = name
         self.owner = owner
 
-    def emit(self):
-        self.owner.emit(self.name, self.state)
+    async def emit(self):
+        await self.owner.emit(self.name, self.state)
