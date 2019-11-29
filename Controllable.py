@@ -12,10 +12,11 @@ class Controllable:
         self.name = name
         self.owner = owner
 
-    def computed_state(self):
+    def summary(self):
         return {
+            'name': self.name,
             'state': self.state,
         }
 
     async def emit(self):
-        await self.owner.emit(self.name, self.computed_state())
+        await self.owner.emit(self.summary())

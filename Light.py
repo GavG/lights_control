@@ -33,8 +33,10 @@ class Light(Controllable):
         #free up GPIOs
         print("Release: " + self.name + ' pin: ' + str(self.pin))
 
-    def computed_state(self):
+    def summary(self):
         return {
+            'pin': self.pin,
+            'name': self.name,
             'state': self.state,
             'enabled': self.enabled,
         }

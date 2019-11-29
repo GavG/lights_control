@@ -23,7 +23,7 @@ class LightController:
             return True
 
     def list_lights(self):
-        return [{light.name: light.computed_state()} for light in self.lights.values()]
+        return [light.summary() for light in self.lights.values()]
 
     async def enable_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
@@ -53,9 +53,7 @@ class LightController:
     def set_ws(self, websocket):
         self.websocket = websocket
 
-    async def emit(self, name, state):
-        print('light name: ' + name + ', state: ' + state['state'])
-
+    async def emit(self, summary):
         if(self.websocket):
             print('emit')
-            await self.websocket.send(json.dumps({name: state}))
+            await self.websocket.send(json.dumps(summary))
