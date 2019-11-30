@@ -12,8 +12,23 @@
                 <tr v-for="light in lights">
                     <td v-text="light.name"></td>
                     <td>
-                        <button v-if="light.enabled" @click="command('disable_lights', [light.pin])">DISABLE</button>
-                        <button v-else @click="command('enable_lights', [light.pin])">ENABLE</button>
+                        <button v-if="light.enabled" @click="command('disable_lights', [light.pin])">
+                            DISABLE
+                        </button>
+                        <button v-else @click="command('enable_lights', [light.pin])">
+                            ENABLE
+                        </button>
+                    </td>
+                    <td>
+                        <button v-if="light.state != on_state" @click="command('turn_on_lights', [light.pin])">
+                            ON
+                        </button>
+                        <button v-if="light.state != off_state" @click="command('turn_off_lights', [light.pin])">
+                            OFF
+                        </button>
+                        <button v-if="light.state != flashing_state" @click="command('flash_lights', [light.pin])">
+                            FLASH
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -29,6 +44,9 @@
             data: {
                 ws: null,
                 lights: [],
+                on_state: 'on',
+                off_state: 'off',
+                flashing_state: 'flashing',
             },
 
             methods: {
