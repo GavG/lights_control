@@ -11,6 +11,7 @@
             <tbody>
                 <tr v-for="light in lights">
                     <td v-text="light.name"></td>
+                    <td v-text="light.state"></td>
                     <td>
                         <button v-if="light.enabled" @click="command('disable_lights', [light.pin])">
                             DISABLE
