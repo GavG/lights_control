@@ -42,7 +42,8 @@ def setup_ws_server(loop):
         async for message in websocket:
             data = json.loads(message)
             if "command" in data:
-                light_controller.command(data["command"])
+                print(data["command"])
+                await light_controller.command(data["command"], data["pins"])
 
     start_server = websockets.serve(ws_light_control, "127.0.0.1", 5678)
 

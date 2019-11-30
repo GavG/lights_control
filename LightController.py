@@ -7,6 +7,14 @@ class LightController:
     lights = {};
     websocket = None
 
+    VALID_COMMANDS = [
+        'enable_lights',
+        'disable_lights',
+        'turn_on_lights',
+        'turn_off_lights',
+        'flash_lights',
+    ]
+
     def _release_lights(self):
         for light in self.lights.values():
             light.release()
@@ -24,6 +32,10 @@ class LightController:
 
     def list_lights(self):
         return [light.summary() for light in self.lights.values()]
+
+    async def command(self, command, pins):
+        if(command in self.VALID_COMMANDS):
+            await getattr(self, command)(pins)
 
     async def enable_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):

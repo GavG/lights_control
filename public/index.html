@@ -2,15 +2,22 @@
 <html>
 
 <head>
-    <title>WebSocket demo</title>
+    <title>Merry Xmas!</title>
 </head>
 
 <body>
     <div id="app">
-        <ol>
-            <li v-for="light in lights" v-text="light.name">
-            </li>
-        </ol>
+        <table>
+            <tbody>
+                <tr v-for="light in lights">
+                    <td v-text="light.name"></td>
+                    <td>
+                        <button v-if="light.enabled" @click="command('disable_lights', [light.pin])">DISABLE</button>
+                        <button v-else>ENABLE</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -20,18 +27,26 @@
             el: '#app',
 
             data: {
+                ws: null,
                 lights: [],
             },
 
             methods: {
                 ws_update: function(event) {
                     this.lights = JSON.parse(event.data)
+                },
+                command(command, pins) {
+                    this.ws.send(JSON.stringify({
+                        'command': command,
+                        'pins': pins,
+                    }))
+                    console.log(pins, command)
                 }
             },
 
             created() {
-                ws = new WebSocket("ws://127.0.0.1:5678/")
-                ws.onmessage = this.ws_update
+                this.ws = new WebSocket("ws://127.0.0.1:5678/")
+                this.ws.onmessage = this.ws_update
             }
         })
     </script>
