@@ -13,7 +13,7 @@
                     <td v-text="light.name"></td>
                     <td>
                         <button v-if="light.enabled" @click="command('disable_lights', [light.pin])">DISABLE</button>
-                        <button v-else>ENABLE</button>
+                        <button v-else @click="command('enable_lights', [light.pin])">ENABLE</button>
                     </td>
                 </tr>
             </tbody>
@@ -33,7 +33,19 @@
 
             methods: {
                 ws_update: function(event) {
-                    this.lights = JSON.parse(event.data)
+                    data = JSON.parse(event.data)
+
+                    if (data.list) {
+                        this.lights = data.list
+                    } else if (data.update) {
+                        for (var i = 0; i < this.lights.length; i++) {
+                            if (this.lights[i].pin == data.update.pin) {
+                                this.lights[i] = data.update
+                                this.$forceUpdate()
+                                return true
+                            }
+                        }
+                    }
                 },
                 command(command, pins) {
                     this.ws.send(JSON.stringify({

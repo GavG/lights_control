@@ -67,5 +67,6 @@ class LightController:
 
     async def emit(self, summary):
         if(self.websocket):
-            print('emit')
-            await self.websocket.send(json.dumps(summary))
+            await self.websocket.send(json.dumps({
+                'update': summary
+            }))
