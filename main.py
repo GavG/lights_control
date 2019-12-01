@@ -47,7 +47,7 @@ def setup_ws_server(loop):
                 print(data["command"])
                 await light_controller.command(data["command"], data["pins"])
 
-    start_server = websockets.serve(ws_light_control, "127.0.0.1", 5678)
+    start_server = websockets.serve(ws_light_control, "xmas", 5678)
 
     loop.run_until_complete(start_server)
     loop.run_forever()
