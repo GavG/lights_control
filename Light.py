@@ -1,5 +1,8 @@
 from Controllable import Controllable
 
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+
 class Light(Controllable):
 
     ON_STATE = 'on'
@@ -16,9 +19,12 @@ class Light(Controllable):
     VALID_PINS = [4, 7, 8, 9, 10, 11, 17, 18, 22, 23, 24, 25, 27]
 
     DEFAULT_FLASHING_RATE = 200
+    DEFAULT_FLASHING_OFFSET = 0
 
     pin = None
-    flashing_rate = DEFAULT_FLASHING_RATE
+    flashing_off_period = DEFAULT_FLASHING_RATE
+    flashing_on_period = DEFAULT_FLASHING_RATE
+    flashing_offset = DEFAULT_FLASHING_OFFSET
     state = OFF_STATE
     enabled = False
 
@@ -28,6 +34,7 @@ class Light(Controllable):
 
         Controllable.__init__(self, owner, name)
         self.pin = pin
+        GPIO.setup(self.pin, GPIO.OUT)
 
     def release(self):
         #free up GPIOs
@@ -43,11 +50,10 @@ class Light(Controllable):
 
     def _update(self):
         if(self.enabled):
-            print(str(self.pin) + ' ENABLED ->')
             if(self.state == self.ON_STATE):
-                print('LED ON')
+                GPIO.output(self.pin, GPIO.HIGH)
             elif(self.state == self.OFF_STATE):
-                print('LED OFF')
+                GPIO.output(self.pin, GPIO.LOW)
             elif(self.state == self.FLASHING_STATE):
                 print('LED FLAHSING')
         else:
