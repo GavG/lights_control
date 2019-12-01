@@ -76,7 +76,7 @@
             },
 
             created() {
-                this.ws = new WebSocket("ws://" + window.location.hostname + ":5678/")
+                this.ws = new WebSocket("ws://" + '192.168.0.5' + ":5678/")
                 this.ws.onmessage = this.ws_update
             }
         })
