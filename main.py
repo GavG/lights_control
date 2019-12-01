@@ -66,10 +66,10 @@ async def run():
     light_controller = LightController()
 
     light_controller.add_lights({
-        'LED_1': 4,
-        'LED_2': 7,
-        'LED_3': 8,
-        'LED_4': 9,
+        'LED_1': 17,
+        'LED_2': 22,
+        'LED_3': 23,
+        'LED_4': 24,
     })
 
     await light_controller.enable_lights([4, 7, 8])
