@@ -17,7 +17,7 @@ import threading
 def setup_web_server():
     os.chdir('./public')
 
-    PORT = 80
+    PORT = 9001
 
     Handler = http.server.SimpleHTTPRequestHandler
 
