@@ -39,6 +39,7 @@ class Light(Controllable):
     def release(self):
         #free up GPIOs
         print("Release: " + self.name + ' pin: ' + str(self.pin))
+        GPIO.cleanup(self.pin)
 
     def summary(self):
         return {
