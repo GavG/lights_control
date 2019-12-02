@@ -15,6 +15,7 @@ class LightController:
         'turn_on_lights',
         'turn_off_lights',
         'flash_lights',
+        'twinkle',
     ]
 
     def _release_lights(self):
