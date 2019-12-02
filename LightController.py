@@ -40,7 +40,7 @@ class LightController:
         if(command in self.VALID_COMMANDS):
             await getattr(self, command)(pins)
 
-    async def twinkle(self):
+    async def twinkle(self, pins):
         for light in self.lights.values():
             light.command('_turn_off')
             time.sleep(0.1)
