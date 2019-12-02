@@ -42,9 +42,9 @@ class LightController:
 
     async def twinkle(self, pins):
         for light in self.lights.values():
-            light.command('_turn_off')
+            await light.command('_turn_off')
             time.sleep(0.1)
-            light.command('_turn_on')
+            await light.command('_turn_on')
             time.sleep(1)
 
     async def enable_lights(self, pins):
