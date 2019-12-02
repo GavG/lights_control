@@ -43,7 +43,7 @@ class LightController:
             await getattr(self, command)(pins)
 
     async def twinkle(self, pins):
-        self.twinkling = not pins
+        self.twinkling = pins
         threading.Thread(target=self.do_twinkle, name='twinkle')
 
     async def do_twinkle(self):
