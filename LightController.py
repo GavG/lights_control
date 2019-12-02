@@ -61,7 +61,7 @@ class LightController:
             await light.command('_turn_on')
             time.sleep(0.5)
         if(self.twinkling):
-            self.do_twinkle()
+            await self.do_twinkle()
 
     async def enable_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
