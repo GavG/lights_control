@@ -44,7 +44,7 @@ class LightController:
 
     async def twinkle(self, pins):
         self.twinkling = not pins
-        threading.Thread(target=do_twinkle, name='twinkle')
+        threading.Thread(target=self.do_twinkle, name='twinkle')
 
     async def do_twinkle(self):
         for light in self.lights.values():
