@@ -50,14 +50,16 @@
                 on_state: 'on',
                 off_state: 'off',
                 flashing_state: 'flashing',
-                twinkling: [],
+                twinkling: null,
             },
 
             methods: {
                 ws_update: function(event) {
                     data = JSON.parse(event.data)
 
-                    if (data.twinkling !== undefined) this.twinkling = data.twinkling
+                    if (data.twinkling !== undefined) {
+                        this.twinkling = data.twinkling
+                    }
 
                     if (data.list) {
                         this.lights = data.list
