@@ -72,7 +72,8 @@ async def run():
         'LED_4': 24,
     })
 
-    await light_controller.enable_lights([4, 7, 8])
+    await light_controller.enable_lights([17, 22, 23, 24])
+    await light_controller.command('turn_on_lights', [17, 22, 23, 24])
 
     loop = asyncio.new_event_loop()
     ws_server_thread = threading.Thread(target=setup_ws_server, name='ws', args=[loop])
