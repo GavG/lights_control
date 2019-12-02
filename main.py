@@ -38,7 +38,8 @@ def setup_ws_server(loop):
         light_controller.set_ws(websocket)
 
         await ws_emit(websocket, json.dumps({
-            'list': light_controller.list_lights()
+            'list': light_controller.list_lights(),
+            'twinkling': light_controller.twinkling,
         }))
 
         async for message in websocket:

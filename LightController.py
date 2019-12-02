@@ -41,11 +41,17 @@ class LightController:
             await getattr(self, command)(pins)
 
     async def twinkle(self, pins):
+        self.twinkling = not pins
+        threading.Thread(target=do_twinkle, name='twinkle')
+
+    async def do_twinkle(self):
         for light in self.lights.values():
             await light.command('_turn_off')
             time.sleep(0.1)
             await light.command('_turn_on')
-            time.sleep(1)
+            time.sleep(0.5)
+        if(self.twinkling):
+            self.do_twinkle()
 
     async def enable_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
@@ -78,5 +84,6 @@ class LightController:
     async def emit(self, summary):
         if(self.websocket):
             await self.websocket.send(json.dumps({
-                'update': summary
+                'update': summary,
+                'twinkling': self.twinkling,
             }))
