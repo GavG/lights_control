@@ -2,6 +2,8 @@ from Light import Light
 from multiprocessing import Value
 import json
 
+import time
+
 class LightController:
 
     lights = {};
@@ -36,6 +38,13 @@ class LightController:
     async def command(self, command, pins):
         if(command in self.VALID_COMMANDS):
             await getattr(self, command)(pins)
+
+    async def twinkle(self):
+        for light in self.lights:
+            light.command('_turn_off')
+            time.sleep(0.1)
+            light.command('_turn_on')
+            time.sleep(1)
 
     async def enable_lights(self, pins):
         if(all(pin in self.lights for pin in pins)):
