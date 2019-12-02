@@ -35,8 +35,8 @@
             </tbody>
         </table>
 
-        <button v-if="twinkling" @click="command('twinkle', True)">Twinkle</button>
-        <button v-else @click="command('twinkle', False)">Stop Twinkling</button>
+        <button v-if="!twinkling" @click="command('twinkle', 1)">Twinkle</button>
+        <button v-else @click="command('twinkle', 0)">Stop Twinkling</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
