@@ -10,6 +10,7 @@ class LightController:
     lights = {};
     websocket = None
     twinkling = False
+    twinkle_thread = None
 
     VALID_COMMANDS = [
         'enable_lights',
