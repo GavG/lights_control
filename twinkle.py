@@ -15,7 +15,7 @@ t_pin = 17
 
 while True:
     sleep(random.uniform(0, 1.5))
-    while (t_pin != last):
+    while (t_pin == last):
          t_pin = random.choice(pins)
     last = t_pin
     GPIO.output(t_pin, GPIO.LOW)
