@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 from random import randint
-import time import sleep
+from time import sleep
 
 GPIO.setmode(GPIO.BCM)
 
