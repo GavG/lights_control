@@ -12,7 +12,7 @@ for pin in pins:
 
 while True:
     sleep(random.uniform(0, 1.5))
-    t_pin = pins[randint(0, 3)]
+    t_pin = pins[random.randint(0, 3)]
     GPIO.output(t_pin, GPIO.LOW)
     sleep(0.05)
     GPIO.output(t_pin, GPIO.HIGH)
