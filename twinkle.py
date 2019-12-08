@@ -11,8 +11,8 @@ for pin in pins:
     GPIO.output(pin, GPIO.HIGH)
 
 while True:
-    sleep(randint(2, 10))
+    sleep(randint(0, 5))
     t_pin = pins[randint(0, 3)]
     GPIO.output(t_pin, GPIO.LOW)
-    sleep(0.1)
+    sleep(0.05)
     GPIO.output(t_pin, GPIO.HIGH)
