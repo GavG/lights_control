@@ -10,8 +10,8 @@ for pin in pins:
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, GPIO.HIGH)
 
-last = 0
-t_pin = 0
+last = 17
+t_pin = 17
 
 while True:
     sleep(random.uniform(0, 1.5))
