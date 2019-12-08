@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from random import randint
+import random
 from time import sleep
 
 GPIO.setmode(GPIO.BCM)
@@ -11,7 +11,7 @@ for pin in pins:
     GPIO.output(pin, GPIO.HIGH)
 
 while True:
-    sleep(randint(0, 5))
+    sleep(random.uniform(0, 1.5))
     t_pin = pins[randint(0, 3)]
     GPIO.output(t_pin, GPIO.LOW)
     sleep(0.05)
